@@ -18,19 +18,20 @@ fn main() {
     //TODO: Panic if not enough arguments are provided
     //Panic should output the string "Not enough arguments"
 
-    // if args.len() < 2 {
-    //     panic!("Not enough arguments")
-    // }
+    if _args.len() != 3 {
+        panic!("Not enough arguments");
+    }
 
     //TODO: 
     //  * Pass an argument to read_file to read the original text
     //  * Pass that to disemvowel to remove the vowels
     //  * Write the disemvoweled text using write_file
     // read_file(Path::new(_args.first()))
-    //disemvowel(s);
+    // disemvowel(s);
 
     // Replace String::from("test") with what you get from read_file
-    let s = String::from("dummy text");
+    let f_path = Path::new(&_args[1]);
+    let s = read_file(f_path);
 
     let _s_disemvowel = disemvowel(&s);
 
@@ -48,7 +49,7 @@ fn write_file(path: &Path, s: &str) {
 
 //TODO: Return the input string without vowels.
 fn disemvowel(s: &str) -> String {
-    let s = s.replace(&['a', 'e', 'i', 'o', 'u'][..], "");
+    let s = s.replace(&['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'][..], "");
     String::from(s)
 }
 
@@ -120,7 +121,7 @@ mod tests {
         use super::*;
         #[test]
         fn requires_two_arguments() {
-            let mut cmd = Command::cargo_bin("rust-disemvowel").unwrap();
+            let mut cmd = Command::cargo_bin("disemvowel-in-rust").unwrap();
             cmd.arg("1");
             cmd.assert()
                 .failure()
@@ -128,7 +129,7 @@ mod tests {
         }
         #[test]
         fn requires_read_file() {
-            let mut cmd = Command::cargo_bin("rust-disemvowel").unwrap();
+            let mut cmd = Command::cargo_bin("disemvowel-in-rust").unwrap();
             cmd.arg("/this/path/does/not/exist")
                 .arg("output/path/doesnt/matter");
             cmd.assert()
